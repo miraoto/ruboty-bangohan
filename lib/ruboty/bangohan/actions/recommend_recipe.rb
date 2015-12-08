@@ -21,14 +21,14 @@ module Ruboty
           if food == 'なんでもいい'
             recipe_category_id = results[results.keys.sample(1)]
             recipe = choose_recipe(recipe_category_id)
-            "#{food}なら、#{recipe['recipeTitle']} とかはどう？\n #{recipe['foodImageUrl']}"
+            "#{food}なら、#{recipe['recipeTitle']} とかはどう？\n #{recipe['foodImageUrl']} <http://webservice.rakuten.co.jp/|Supported by 楽天ウェブサービス>"
           else
             recipe_category_id = results.fetch(food, nil)
             if recipe_category_id.nil?
               "#{food}もうちょっと詳しく教えて"
             else
               recipe = choose_recipe(recipe_category_id)
-              "#{food}だと、#{recipe['recipeTitle']} とかはどう？\n #{recipe['foodImageUrl']}"
+              "#{food}だと、#{recipe['recipeTitle']} とかはどう？\n #{recipe['recipeUrl']}  <http://webservice.rakuten.co.jp/|Supported by 楽天ウェブサービス>"
             end
           end
         end
