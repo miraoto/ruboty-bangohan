@@ -17,15 +17,19 @@ module Ruboty
         private
 
         def hearing(food)
-          recipe_category_id = recipe_categories.fetch(food, nil)
-          if food == 'なんでもいいよ'
-            # TODO 適当に決める
-          end
-          if recipe_category_id.nil?
-            'もうちょっと詳しく教えて'
-          else
+          results = recipe_categories
+          if food == 'なんでもいい'
+            recipe_category_id = results[results.keys.sample(1)]
             recipe = choose_recipe(recipe_category_id)
-            "#{food}だと、#{recipe['recipeTitle']} とかはどう？\n #{recipe['foodImageUrl']}"
+            "#{food}なら、#{recipe['recipeTitle']} とかはどう？\n #{recipe['foodImageUrl']}"
+          else
+            recipe_category_id = results.fetch(food, nil)
+            if recipe_category_id.nil?
+              "#{food}もうちょっと詳しく教えて"
+            else
+              recipe = choose_recipe(recipe_category_id)
+              "#{food}だと、#{recipe['recipeTitle']} とかはどう？\n #{recipe['foodImageUrl']}"
+            end
           end
         end
 
