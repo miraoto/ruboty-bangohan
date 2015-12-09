@@ -21,35 +21,35 @@ module Ruboty
           if food == 'なんでもいい'
             recipe_category_id = results[results.keys.sample(1)]
             recipe = choose_recipe(recipe_category_id)
-            "#{food}なら、#{recipe['recipeTitle']} とかはどう？\n #{recipe['foodImageUrl']} <http://webservice.rakuten.co.jp/|Supported by 楽天ウェブサービス>"
+            "#{food}なら、#{recipe['recipeTitle']} とかはどう？\n #{recipe['recipeUrl']}\n" +
+            ' <http://webservice.rakuten.co.jp/|Supported by 楽天ウェブサービス> '
           else
             recipe_category_id = results.fetch(food, nil)
             if recipe_category_id.nil?
-              "#{food}もうちょっと詳しく教えて"
+              "#{food}だとわからないからもうちょっと詳しく教えて"
             else
               recipe = choose_recipe(recipe_category_id)
-              "#{food}だと、#{recipe['recipeTitle']} とかはどう？\n #{recipe['recipeUrl']}  <http://webservice.rakuten.co.jp/|Supported by 楽天ウェブサービス>"
+              "#{food}だと、#{recipe['recipeTitle']} とかはどう？\n #{recipe['recipeUrl']}\n" +
+              ' <http://webservice.rakuten.co.jp/|Supported by 楽天ウェブサービス> '
             end
           end
         end
 
-        def recipe_categories
-          conn = Faraday.new(:url => 'https://app.rakuten.co.jp') do |faraday|
+        def recipe_service_api
+          @conn ||= Faraday.new(:url => 'https://app.rakuten.co.jp') do |faraday|
             faraday.request  :url_encoded
             faraday.adapter  Faraday.default_adapter
           end
-          response = conn.get(RECIPE_CATEGORY_URL)
+        end
+
+        def recipe_categories
+          response = recipe_service_api.get(RECIPE_CATEGORY_URL)
           results = JSON.parse(response.body.force_encoding('UTF-8'))
           results["result"]["medium"].map{|result| [result['categoryName'], "#{result['parentCategoryId']}-#{result['categoryId']}"]}.to_h
         end
 
         def choose_recipe(recipe_category_id)
-          conn = Faraday.new(:url => 'https://app.rakuten.co.jp') do |faraday|
-            faraday.request  :url_encoded
-            faraday.response :logger
-            faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
-          end
-          response = conn.get("#{RECIPES_URL}#{recipe_category_id}")
+          response = recipe_service_api.get("#{RECIPES_URL}#{recipe_category_id}")
           results = JSON.parse(response.body.force_encoding('UTF-8'))
           results['result'][Random.rand(1 .. results['result'].count)]
         end
