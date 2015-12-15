@@ -1,6 +1,4 @@
-require "ruboty/bangohan/actions/bangohan"
 require "ruboty/bangohan/actions/recommend_recipe"
-require "ruboty/bangohan/actions/recipe_food"
 
 module Ruboty
   module Handlers
