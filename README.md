@@ -26,14 +26,16 @@ Copy .env.sample file and export APPLICATION_ID configuration from [楽天レシ
 ## Usage
 The example which let you cooperate with slack using ![ruboty-slack](https://github.com/r7kamura/ruboty-slack).
 
-### 該当するものがある場合、ランダムでレシピを返す
+    $ 今日は---かな
+
+#### 該当するものがある場合、ランダムでレシピを返す
 
 ![該当するものがある場合、ランダムでレシピを返す](https://qiita-image-store.s3.amazonaws.com/0/100018/fdab47ec-e630-6670-f19c-f998ce1870e5.png "該当するものがある場合、ランダムでレシピを返す")
 
-### 該当するものがない場合、聞き返す
+#### 該当するものがない場合、聞き返す
 ![該当するものがない場合、聞き返す](https://qiita-image-store.s3.amazonaws.com/0/100018/b0b076c8-b30c-4ad0-bfe0-3bf6879c891c.png 該当するものがない場合、聞き返す)
 
-### なんでもいい場合は、勝手に選んでくれる
+#### なんでもいい場合は、勝手に選んでくれる
 ![該当するものがない場合、聞き返す](https://qiita-image-store.s3.amazonaws.com/0/100018/9c915941-cacb-bc2c-7db4-5757d46ac57a.png 該当するものがない場合、聞き返す)
 
 ## Development
